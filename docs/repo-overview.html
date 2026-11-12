@@ -1,0 +1,440 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>OpenAirInterface 5G RAN Repository Overview</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #17202a;
+      --muted: #56616d;
+      --line: #d8dee5;
+      --panel: #f7f9fb;
+      --blue: #1d5f99;
+      --green: #26715b;
+      --gold: #946b12;
+      --red: #a8443f;
+      --violet: #6654a5;
+      --cyan: #2b7582;
+      --white: #ffffff;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--white);
+      font: 15px/1.48 Arial, Helvetica, sans-serif;
+    }
+
+    main {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 28px 24px 36px;
+    }
+
+    header {
+      display: grid;
+      grid-template-columns: minmax(0, 1.25fr) minmax(280px, 0.75fr);
+      gap: 22px;
+      align-items: end;
+      padding-bottom: 18px;
+      border-bottom: 2px solid var(--line);
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      margin: 0;
+    }
+
+    h1 {
+      max-width: 800px;
+      font-size: clamp(30px, 5vw, 54px);
+      line-height: 1.02;
+      letter-spacing: 0;
+    }
+
+    h2 {
+      margin-bottom: 12px;
+      font-size: 20px;
+      line-height: 1.2;
+    }
+
+    h3 {
+      font-size: 15px;
+      line-height: 1.25;
+    }
+
+    .dek {
+      margin-top: 12px;
+      max-width: 770px;
+      color: var(--muted);
+      font-size: 17px;
+    }
+
+    .facts {
+      display: grid;
+      gap: 8px;
+      padding: 14px;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+    }
+
+    .fact {
+      display: grid;
+      grid-template-columns: 86px 1fr;
+      gap: 8px;
+    }
+
+    .fact strong {
+      color: var(--muted);
+      font-size: 12px;
+      text-transform: uppercase;
+    }
+
+    nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 18px 0 24px;
+    }
+
+    nav a {
+      min-height: 34px;
+      padding: 8px 11px;
+      color: var(--ink);
+      text-decoration: none;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+    }
+
+    nav a:focus,
+    nav a:hover {
+      border-color: var(--blue);
+      outline: none;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(320px, 0.85fr);
+      gap: 22px;
+    }
+
+    section {
+      margin-top: 24px;
+    }
+
+    .panel {
+      padding: 16px;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+    }
+
+    .notes {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .note {
+      min-height: 112px;
+      padding: 14px;
+      border-left: 4px solid var(--blue);
+      background: var(--panel);
+    }
+
+    .note:nth-child(2) {
+      border-left-color: var(--green);
+    }
+
+    .note:nth-child(3) {
+      border-left-color: var(--gold);
+    }
+
+    .note p,
+    .directory p,
+    .caption,
+    .source-note {
+      color: var(--muted);
+    }
+
+    .diagram {
+      width: 100%;
+      height: auto;
+      display: block;
+      background: var(--white);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+    }
+
+    .diagram text {
+      font-family: Arial, Helvetica, sans-serif;
+      letter-spacing: 0;
+    }
+
+    .caption {
+      margin-top: 8px;
+      font-size: 13px;
+    }
+
+    .directory {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .dir-card {
+      min-height: 118px;
+      padding: 12px;
+      background: var(--white);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+    }
+
+    .dir-card code {
+      display: inline-block;
+      margin-bottom: 6px;
+      color: var(--blue);
+      font-weight: 700;
+      font-size: 13px;
+    }
+
+    .source-note {
+      margin-top: 18px;
+      padding-top: 14px;
+      border-top: 1px solid var(--line);
+      font-size: 13px;
+    }
+
+    @media (max-width: 900px) {
+      main {
+        padding: 22px 16px 28px;
+      }
+
+      header,
+      .grid,
+      .notes {
+        grid-template-columns: 1fr;
+      }
+
+      .directory {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 560px) {
+      body {
+        font-size: 14px;
+      }
+
+      nav a {
+        flex: 1 1 140px;
+        text-align: center;
+      }
+
+      .directory {
+        grid-template-columns: 1fr;
+      }
+
+      .fact {
+        grid-template-columns: 1fr;
+        gap: 2px;
+      }
+    }
+
+    @media print {
+      main {
+        max-width: none;
+        padding: 12mm;
+      }
+
+      nav {
+        display: none;
+      }
+
+      section {
+        break-inside: avoid;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <div>
+        <h1>OpenAirInterface 5G RAN repository overview</h1>
+        <p class="dek">A native LTE and 5G radio access network stack for eNB, gNB, UE, split RAN, simulated radio, hardware radio, and fronthaul experiments. The codebase is organized by RAN layers and runtime roles, not by web application tiers.</p>
+      </div>
+      <aside class="facts" aria-label="Repository facts">
+        <div class="fact"><strong>Focus</strong><span>4G/5G RAN software and protocol implementations</span></div>
+        <div class="fact"><strong>Runtime</strong><span>C/C++ softmodems assembled by CMake</span></div>
+        <div class="fact"><strong>Entry</strong><span><code>executables/</code> starts gNB, UE, CU, DU, and related roles</span></div>
+        <div class="fact"><strong>Internal bus</strong><span>ITTI task messaging coordinates protocol/runtime tasks</span></div>
+      </aside>
+    </header>
+
+    <nav aria-label="Page sections">
+      <a href="#stack" data-testid="overview-nav-stack-link">Stack</a>
+      <a href="#runtime" data-testid="overview-nav-runtime-link">Runtime flow</a>
+      <a href="#directories" data-testid="overview-nav-directories-link">Directory map</a>
+      <a href="#navigation" data-testid="overview-nav-navigation-link">Where to start</a>
+    </nav>
+
+    <section id="stack">
+      <h2>Layered RAN Stack</h2>
+      <svg class="diagram" viewBox="0 0 1020 430" role="img" aria-labelledby="stack-title stack-desc">
+        <title id="stack-title">OpenAirInterface RAN stack layer map</title>
+        <desc id="stack-desc">A high-level map from applications and control interfaces through RRC, SDAP, PDCP, RLC, MAC, PHY, radio drivers, fronthaul, tests, and deployment assets.</desc>
+        <defs>
+          <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path d="M 0 0 L 10 5 L 0 10 z" fill="#56616d"></path>
+          </marker>
+        </defs>
+        <rect x="22" y="24" width="976" height="382" rx="10" fill="#ffffff" stroke="#d8dee5"></rect>
+        <rect x="50" y="54" width="240" height="68" rx="8" fill="#e8f1f8" stroke="#1d5f99"></rect>
+        <text x="170" y="84" text-anchor="middle" font-size="18" font-weight="700" fill="#17202a">Runtime roles</text>
+        <text x="170" y="106" text-anchor="middle" font-size="13" fill="#56616d">gNB, eNB, UE, CU, DU</text>
+
+        <rect x="320" y="54" width="316" height="68" rx="8" fill="#eaf4ef" stroke="#26715b"></rect>
+        <text x="478" y="84" text-anchor="middle" font-size="18" font-weight="700" fill="#17202a">Control and user plane</text>
+        <text x="478" y="106" text-anchor="middle" font-size="13" fill="#56616d">RRC, SDAP, PDCP, NAS/Core-facing protocols</text>
+
+        <rect x="666" y="54" width="282" height="68" rx="8" fill="#fff5df" stroke="#946b12"></rect>
+        <text x="807" y="84" text-anchor="middle" font-size="18" font-weight="700" fill="#17202a">Integration surfaces</text>
+        <text x="807" y="106" text-anchor="middle" font-size="13" fill="#56616d">F1, E1, NG, Xn/X2, nFAPI/FAPI</text>
+
+        <rect x="160" y="156" width="700" height="46" rx="8" fill="#f3eef9" stroke="#6654a5"></rect>
+        <text x="510" y="185" text-anchor="middle" font-size="17" font-weight="700" fill="#17202a">Layer 2: MAC, RLC, PDCP, SDAP, RRC</text>
+
+        <rect x="160" y="224" width="700" height="46" rx="8" fill="#eef8fa" stroke="#2b7582"></rect>
+        <text x="510" y="253" text-anchor="middle" font-size="17" font-weight="700" fill="#17202a">Layer 1: PHY processing and simulation tests</text>
+
+        <rect x="50" y="312" width="286" height="58" rx="8" fill="#f7f9fb" stroke="#d8dee5"></rect>
+        <text x="193" y="338" text-anchor="middle" font-size="16" font-weight="700" fill="#17202a">Radio drivers</text>
+        <text x="193" y="358" text-anchor="middle" font-size="13" fill="#56616d">USRP, rfsimulator, device backends</text>
+
+        <rect x="366" y="312" width="286" height="58" rx="8" fill="#f7f9fb" stroke="#d8dee5"></rect>
+        <text x="509" y="338" text-anchor="middle" font-size="16" font-weight="700" fill="#17202a">Fronthaul split</text>
+        <text x="509" y="358" text-anchor="middle" font-size="13" fill="#56616d">O-RAN / native 7.2x paths</text>
+
+        <rect x="682" y="312" width="266" height="58" rx="8" fill="#f7f9fb" stroke="#d8dee5"></rect>
+        <text x="815" y="338" text-anchor="middle" font-size="16" font-weight="700" fill="#17202a">Build, CI, deployment</text>
+        <text x="815" y="358" text-anchor="middle" font-size="13" fill="#56616d">CMake, CTest, Docker, charts</text>
+
+        <line x1="170" y1="122" x2="320" y2="156" stroke="#56616d" stroke-width="2" marker-end="url(#arrow)"></line>
+        <line x1="478" y1="122" x2="510" y2="156" stroke="#56616d" stroke-width="2" marker-end="url(#arrow)"></line>
+        <line x1="807" y1="122" x2="700" y2="156" stroke="#56616d" stroke-width="2" marker-end="url(#arrow)"></line>
+        <line x1="510" y1="202" x2="510" y2="224" stroke="#56616d" stroke-width="2" marker-end="url(#arrow)"></line>
+        <line x1="430" y1="270" x2="240" y2="312" stroke="#56616d" stroke-width="2" marker-end="url(#arrow)"></line>
+        <line x1="510" y1="270" x2="510" y2="312" stroke="#56616d" stroke-width="2" marker-end="url(#arrow)"></line>
+        <line x1="590" y1="270" x2="760" y2="312" stroke="#56616d" stroke-width="2" marker-end="url(#arrow)"></line>
+      </svg>
+      <p class="caption">The diagram is intentionally high level: it orients readers to major repository responsibilities before they dive into 3GPP- and O-RAN-specific implementations.</p>
+    </section>
+
+    <div class="grid">
+      <section id="runtime">
+        <h2>Representative Runtime Relationship Flow</h2>
+        <svg class="diagram" viewBox="0 0 760 360" role="img" aria-labelledby="runtime-title runtime-desc">
+          <title id="runtime-title">Runtime assembly flow</title>
+          <desc id="runtime-desc">Executables parse configuration, assemble protocol tasks, use ITTI for typed message exchange, then talk to radio, fronthaul, and network interfaces.</desc>
+          <defs>
+            <marker id="flow-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+              <path d="M 0 0 L 10 5 L 0 10 z" fill="#56616d"></path>
+            </marker>
+          </defs>
+          <rect x="24" y="24" width="712" height="312" rx="10" fill="#ffffff" stroke="#d8dee5"></rect>
+          <rect x="54" y="70" width="156" height="70" rx="8" fill="#e8f1f8" stroke="#1d5f99"></rect>
+          <text x="132" y="98" text-anchor="middle" font-size="15" font-weight="700" fill="#17202a">executables/</text>
+          <text x="132" y="120" text-anchor="middle" font-size="12" fill="#56616d">softmodem entry</text>
+
+          <rect x="302" y="70" width="156" height="70" rx="8" fill="#eaf4ef" stroke="#26715b"></rect>
+          <text x="380" y="98" text-anchor="middle" font-size="15" font-weight="700" fill="#17202a">Runtime config</text>
+          <text x="380" y="120" text-anchor="middle" font-size="12" fill="#56616d">node type, split mode</text>
+
+          <rect x="550" y="70" width="156" height="70" rx="8" fill="#fff5df" stroke="#946b12"></rect>
+          <text x="628" y="98" text-anchor="middle" font-size="15" font-weight="700" fill="#17202a">Protocol tasks</text>
+          <text x="628" y="120" text-anchor="middle" font-size="12" fill="#56616d">RRC, NGAP, SCTP, GTP-U</text>
+
+          <rect x="302" y="182" width="156" height="70" rx="8" fill="#f3eef9" stroke="#6654a5"></rect>
+          <text x="380" y="210" text-anchor="middle" font-size="15" font-weight="700" fill="#17202a">ITTI messages</text>
+          <text x="380" y="232" text-anchor="middle" font-size="12" fill="#56616d">typed internal bus</text>
+
+          <rect x="54" y="266" width="156" height="48" rx="8" fill="#f7f9fb" stroke="#d8dee5"></rect>
+          <text x="132" y="296" text-anchor="middle" font-size="13" font-weight="700" fill="#17202a">Radio / simulator</text>
+
+          <rect x="302" y="266" width="156" height="48" rx="8" fill="#f7f9fb" stroke="#d8dee5"></rect>
+          <text x="380" y="296" text-anchor="middle" font-size="13" font-weight="700" fill="#17202a">FAPI / fronthaul</text>
+
+          <rect x="550" y="266" width="156" height="48" rx="8" fill="#f7f9fb" stroke="#d8dee5"></rect>
+          <text x="628" y="296" text-anchor="middle" font-size="13" font-weight="700" fill="#17202a">Core / peer RAN</text>
+
+          <line x1="210" y1="105" x2="302" y2="105" stroke="#56616d" stroke-width="2" marker-end="url(#flow-arrow)"></line>
+          <line x1="458" y1="105" x2="550" y2="105" stroke="#56616d" stroke-width="2" marker-end="url(#flow-arrow)"></line>
+          <line x1="628" y1="140" x2="458" y2="192" stroke="#56616d" stroke-width="2" marker-end="url(#flow-arrow)"></line>
+          <line x1="302" y1="217" x2="210" y2="277" stroke="#56616d" stroke-width="2" marker-end="url(#flow-arrow)"></line>
+          <line x1="380" y1="252" x2="380" y2="266" stroke="#56616d" stroke-width="2" marker-end="url(#flow-arrow)"></line>
+          <line x1="458" y1="217" x2="550" y2="277" stroke="#56616d" stroke-width="2" marker-end="url(#flow-arrow)"></line>
+        </svg>
+        <p class="caption">Specific deployment variants can be monolithic or split. This flow shows the common mental model: entry point, configuration, task assembly, internal messages, and external interfaces.</p>
+      </section>
+
+      <section id="navigation">
+        <h2>Where To Start</h2>
+        <div class="panel">
+          <p><strong>To run a node:</strong> start in <code>executables/</code> and the example configs under <code>targets/</code> or <code>ci-scripts/conf_files/</code>.</p>
+          <p><strong>To understand protocol behavior:</strong> follow the layer ownership from <code>openair1/</code>, <code>openair2/</code>, and <code>openair3/</code>, then use ITTI task names to trace runtime interaction.</p>
+          <p><strong>To verify changes:</strong> use CMake and CTest paths. PHY work usually needs physim coverage; RRC/NAS/rfsim behavior often needs CI-scripted scenarios.</p>
+        </div>
+        <div class="notes">
+          <article class="note">
+            <h3>Build graph</h3>
+            <p>CMake owns the build graph; helper scripts exist, but direct CMake/Ninja is the normal developer path.</p>
+          </article>
+          <article class="note">
+            <h3>Runtime shape</h3>
+            <p>Softmodem binaries assemble reusable protocol, runtime, radio, and split-mode libraries at startup.</p>
+          </article>
+          <article class="note">
+            <h3>Scale</h3>
+            <p>The codebase is large enough that directory and flow maps are a prerequisite to productive source reading.</p>
+          </article>
+        </div>
+      </section>
+    </div>
+
+    <section id="directories">
+      <h2>Top-Level Directory Map</h2>
+      <div class="directory">
+        <article class="dir-card"><code>executables/</code><p>gNB, UE, CU, DU, and softmodem entry points.</p></article>
+        <article class="dir-card"><code>openair1/</code><p>PHY layer processing, simulation paths, and low-level signal work.</p></article>
+        <article class="dir-card"><code>openair2/</code><p>MAC, RLC, PDCP, SDAP, RRC, and layer-2 control logic.</p></article>
+        <article class="dir-card"><code>openair3/</code><p>NAS and core-facing protocol implementations such as NGAP and GTP.</p></article>
+        <article class="dir-card"><code>common/</code><p>Shared utilities, configuration, logging, ITTI support, and platform code.</p></article>
+        <article class="dir-card"><code>nfapi/</code><p>FAPI/nFAPI support for PNF/VNF-style split integrations.</p></article>
+        <article class="dir-card"><code>radio/</code><p>Radio backends including hardware and simulated radio paths.</p></article>
+        <article class="dir-card"><code>fronthaul/</code><p>Native and O-RAN-oriented fronthaul split support.</p></article>
+        <article class="dir-card"><code>targets/</code><p>Example runtime configurations and project-specific target files.</p></article>
+        <article class="dir-card"><code>ci-scripts/</code><p>End-to-end scenario harnesses, configs, and CI execution scripts.</p></article>
+        <article class="dir-card"><code>docker/</code><p>Build and runtime container images used by CI and deployment flows.</p></article>
+        <article class="dir-card"><code>tests/</code><p>Standalone tests and validation programs outside the main runtime tree.</p></article>
+        <article class="dir-card"><code>cmake_targets/</code><p>Build helper scripts, dependency install helpers, and physim lists.</p></article>
+        <article class="dir-card"><code>doc/</code><p>Contributor, tutorial, feature, and code-style documentation.</p></article>
+        <article class="dir-card"><code>tools/</code><p>Formatting, static analysis, and developer support utilities.</p></article>
+        <article class="dir-card"><code>charts/</code> <code>openshift/</code><p>Kubernetes and OpenShift packaging for CI and deployment contexts.</p></article>
+      </div>
+      <p class="source-note">Source basis: this overview follows the AI-DLC requirements, business-overview, architecture, and code-structure artifacts for the OpenAirInterface 5G RAN repository. It is a contributor orientation page, not an exhaustive protocol reference.</p>
+    </section>
+  </main>
+</body>
+</html>
